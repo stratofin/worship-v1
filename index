@@ -153,6 +153,181 @@ const { useState, useEffect, useRef, useCallback } = React;
 // ══════════════════════════════════════════════
 const HANDBOOK = [
   {
+    id: "simple",
+    emoji: "💡",
+    title: "超簡化重點版",
+    subtitle: "MD 重點提醒",
+    desc: "MD 不是來表現自己，而是幫助主領、牧者和整個樂團同心，把敬拜帶得清楚、穩定、有層次。重點不是「我彈得多厲害」，而是「整個團隊能不能一起服事得好」。",
+    sections: [
+      {
+        id: "simple-what",
+        title: "1. MD 是做什麼的？",
+        content: [
+          { type: "keypoint", text: "主領負責帶敬拜，牧者負責屬靈方向，MD 負責讓音樂跟得上。" },
+          { type: "p", text: "MD 可以理解成三個角色：" },
+          { type: "list", items: [
+            { text: "負責帶樂團的人" },
+            { text: "幫忙把主領的感動，變成樂手聽得懂的指令" },
+            { text: "幫忙現場穩住流程、氛圍、能量和轉場的人" },
+          ]},
+        ]
+      },
+      {
+        id: "simple-principles",
+        title: "2. MD 最重要的三個原則",
+        content: [
+          { type: "h4", text: "第一：先對齊神，再對齊音樂" },
+          { type: "p", text: "不是只顧拍子、速度、段落對不對，而是要先知道今天敬拜要往哪裡走。" },
+          { type: "h4", text: "第二：指令要讓人安心，不是讓人緊張" },
+          { type: "p", text: "MD 說話要清楚、簡短、穩定。不是碎念，也不是情緒化。" },
+          { type: "h4", text: "第三：靈活比死板更重要" },
+          { type: "p", text: "有流程很好，但現場若主領或牧者有變動，MD 要能立刻跟上，不要硬照原本計畫走。" },
+        ]
+      },
+      {
+        id: "simple-priority",
+        title: "3. 台上誰優先？",
+        content: [
+          { type: "p", text: "當主領或牧者有明確帶領時，MD 要跟上他們，不是堅持自己的想法。因為 MD 的角色是支撐，不是主導全場。" },
+          { type: "keypoint", text: "順序：神的帶領 → 牧者／主領 → MD → 樂手" },
+        ]
+      },
+      {
+        id: "simple-daily",
+        title: "4. MD 平常要做哪些事？",
+        content: [
+          { type: "h4", text: "① 先了解主領常用語言" },
+          { type: "p", text: "MD 要聽得懂「話背後的音樂意思」，例如：" },
+          { type: "list", items: [
+            { text: "「我們宣告」＝音樂要更有力量" },
+            { text: "「我們沉浸」＝音樂要安靜、留空間" },
+            { text: "「再一次」＝可能是重唱副歌，也可能只重複最後一句" },
+          ]},
+          { type: "h4", text: "② 注意整體聲音，不只顧自己" },
+          { type: "list", items: [
+            { text: "鋼琴低音太多，會跟 Bass 打架" },
+            { text: "電吉他太亮，會蓋過主領聲音" },
+            { text: "MD 要幫忙調整，讓整體聲音清楚" },
+          ]},
+          { type: "h4", text: "③ 練習怎麼修正團員" },
+          { type: "p", text: "如果有人彈太滿、太花、太大聲，MD 要能即時提醒，但語氣要專業、溫和。" },
+        ]
+      },
+      {
+        id: "simple-cues",
+        title: "5. MD 下指令要怎麼說？",
+        content: [
+          { type: "keypoint", text: "要短、準、早。不要講太多廢話；要明確；最好提前 2 小節講，不要等到要進了才講。" },
+          { type: "h4", text: "常見指令白話對照表" },
+          { type: "table",
+            headers: ["指令", "白話意思"],
+            rows: [
+              ["Next: Chorus", "下一段進副歌"],
+              ["All out", "幾乎全停"],
+              ["Full band in", "全團一起進"],
+              ["Drop the beat", "鼓停掉節奏，旋律繼續"],
+              ["Kick only", "只留大鼓"],
+              ["Diamond", "刷一下就放掉，留空間"],
+              ["Build up", "慢慢推高氣氛"],
+              ["Unison", "大家一起打同樣節奏"],
+            ]
+          },
+        ]
+      },
+      {
+        id: "simple-decisive",
+        title: "6. 為什麼 MD 不能猶豫？",
+        content: [
+          { type: "keypoint", text: "現場最怕的不是下錯指令，而是沒有人下指令。如果 MD 猶豫，整團會亂掉。" },
+          { type: "p", text: "如果 MD 猶豫，團員就會有人跟主領、有人跟譜、有人跟自己，整團會亂掉。所以 MD 要練到一個程度：看到狀況，馬上反應。" },
+        ]
+      },
+      {
+        id: "simple-energy",
+        title: "7. 能量 1 到 10 是什麼？",
+        content: [
+          { type: "p", text: "這不是單純「大聲或小聲」，而是整體音樂的濃度、推進感、張力。" },
+          { type: "table",
+            headers: ["能量層次", "感覺"],
+            rows: [
+              ["Lv 1–2", "很安靜、很空、很留白"],
+              ["Lv 3–4", "開始建立氣氛"],
+              ["Lv 5–6", "有推進感"],
+              ["Lv 7–8", "很飽滿、很有宣告感"],
+              ["Lv 9–10", "全團最高峰"],
+            ]
+          },
+          { type: "keypoint", text: "能量不等於音量。有時候很安靜，反而更有力量。" },
+        ]
+      },
+      {
+        id: "simple-pastor",
+        title: "8. MD 要會看牧者的動作",
+        content: [
+          { type: "keypoint", text: "音樂要托住牧者，不要蓋過牧者。" },
+          { type: "p", text: "MD 不能只看譜，也要會看台上正在發生什麼：" },
+          { type: "table",
+            headers: ["牧者動作", "MD 的音樂反應"],
+            rows: [
+              ["走到台前、拿起麥克風", "音樂立刻降下來，留空間給話語"],
+              ["開始激動宣告", "音樂慢慢推高，支撐那個氣氛"],
+              ["停頓、閉眼、等候", "音樂更簡單，不要亂塞東西"],
+              ["眼神看向主領或 MD", "可能準備回歌或結束，準備轉段"],
+            ]
+          },
+        ]
+      },
+      {
+        id: "simple-drills",
+        title: "9. 團練不是只練歌，還要練反應",
+        content: [
+          { type: "keypoint", text: "把反應練成本能。不是只把歌練熟，還要把臨場應變練熟。" },
+          { type: "p", text: "手冊提很多操練，核心目的只有一個：把反應練成本能。例如：" },
+          { type: "list", items: [
+            { text: "練主領突然跳段" },
+            { text: "練節奏亂掉怎麼救回來" },
+            { text: "練能量忽高忽低怎麼快速切換" },
+            { text: "練自由禱告時樂器怎麼進出" },
+            { text: "練快歌怎麼接慢歌" },
+          ]},
+        ]
+      },
+      {
+        id: "simple-feedback",
+        title: "10. 好的 MD 不是一直糾錯，而是會成全人",
+        content: [
+          { type: "p", text: "它不是只教技術，也在講帶人的心。" },
+          { type: "list", items: [
+            { text: "台上有問題，先穩住" },
+            { text: "下台檢討，不要變成責備大會" },
+            { text: "先肯定，再講事實，最後提出改善做法" },
+          ]},
+          { type: "h4", text: "正確的回饋三步驟" },
+          { type: "list", items: [
+            { text: "先說哪裡做得好（肯定）" },
+            { text: "再說哪裡有問題（事實）" },
+            { text: "最後講下次要怎麼改（行動）" },
+          ]},
+          { type: "keypoint", text: "這樣團員會比較願意被帶，也比較不會受傷。" },
+        ]
+      },
+      {
+        id: "simple-care",
+        title: "11. MD 也要牧養人",
+        content: [
+          { type: "keypoint", text: "好 MD 不是讓人怕你，而是讓人願意跟你。" },
+          { type: "p", text: "MD 不只是管音樂，也要關心團員：" },
+          { type: "list", items: [
+            { text: "平常私下聊聊" },
+            { text: "了解對方最近服事狀況" },
+            { text: "服事前一起禱告" },
+            { text: "建立一個「可以犯錯、可以學習」的安全感" },
+          ]},
+        ]
+      },
+    ]
+  },
+  {
     id: "intro",
     emoji: "✝️",
     title: "引言與心法",
