@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>共鳴與捨己 | 新生命敬拜團 MD 養成手冊</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:-apple-system,'PingFang TC','Noto Sans TC','Microsoft JhengHei',sans-serif;background:#f5f0e8;color:#2d2d2d;line-height:1.7}
+
+/* ── Layout ── */
+#root{display:flex;height:100vh}
+.sidebar{width:270px;min-width:270px;background:#1a1a35;color:#e0dbd0;display:flex;flex-direction:column;overflow:hidden;transition:width .3s;z-index:10}
+.sidebar.collapsed{width:52px;min-width:52px}
+.main-area{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+
+/* ── Sidebar ── */
+.sidebar-header{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.sidebar-logo{display:flex;align-items:center;gap:10px}
+.sidebar-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#c9a84c,#e8c97a);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sidebar-title-text{overflow:hidden}
+.sidebar-title-text h1{font-size:13px;font-weight:700;color:#c9a84c;white-space:nowrap}
+.sidebar-title-text p{font-size:10px;color:rgba(255,255,255,.4);margin-top:2px;white-space:nowrap}
+.sidebar-nav{flex:1;overflow-y:auto;padding:12px 0}
+.sidebar-nav::-webkit-scrollbar{width:4px}
+.sidebar-nav::-webkit-scrollbar-track{background:transparent}
+.sidebar-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.nav-chapter{margin-bottom:2px}
+.nav-chapter-btn{width:100%;padding:10px 16px;display:flex;align-items:center;gap:10px;background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;font-size:13px;font-family:inherit;transition:all .2s;border-radius:6px;margin:0 6px;width:calc(100% - 12px)}
+.nav-chapter-btn:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-chapter-btn.active{background:rgba(201,168,76,.15);color:#c9a84c}
+.nav-chapter-btn .emoji{font-size:16px;flex-shrink:0;width:22px;text-align:center}
+.nav-chapter-btn .nav-label{overflow:hidden;white-space:nowrap}
+.nav-chapter-btn .nav-label .nav-main{font-size:12px;font-weight:600;display:block;overflow:hidden;text-overflow:ellipsis}
+.nav-chapter-btn .nav-label .nav-sub{font-size:10px;opacity:.6;display:block}
+.nav-chapter-btn .arrow{margin-left:auto;font-size:10px;transition:transform .2s;flex-shrink:0}
+.nav-chapter-btn.open .arrow{transform:rotate(90deg)}
+.nav-sections{overflow:hidden;transition:max-height .3s ease}
+.nav-section-item{padding:7px 16px 7px 48px;font-size:12px;color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-section-item:hover{color:rgba(255,255,255,.85)}
+.nav-section-item.active{color:#c9a84c;font-weight:600}
+
+/* collapse toggle */
+.toggle-btn{padding:12px 16px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:flex-end;flex-shrink:0}
+.toggle-btn button{background:rgba(255,255,255,.07);border:none;color:rgba(255,255,255,.5);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .2s}
+.toggle-btn button:hover{background:rgba(255,255,255,.12);color:#fff}
+
+/* ── Chapter Header ── */
+.chapter-banner{background:linear-gradient(135deg,#1a1a35,#2a2a50);color:#fff;padding:40px 48px 32px;flex-shrink:0}
+.chapter-banner .chapter-label{font-size:11px;color:#c9a84c;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.chapter-banner h2{font-size:28px;font-weight:700;line-height:1.3}
+.chapter-banner .chapter-sub{font-size:14px;color:rgba(255,255,255,.5);margin-top:8px;font-style:italic}
+.chapter-banner .chapter-desc{font-size:14px;color:rgba(255,255,255,.7);margin-top:16px;line-height:1.8;max-width:640px}
+
+/* ── Content Area ── */
+.content-body{padding:32px 48px 64px;max-width:800px}
+.content-body h3{font-size:18px;font-weight:700;color:#1a1a35;margin:32px 0 12px;padding-bottom:8px;border-bottom:2px solid #c9a84c}
+.content-body h4{font-size:15px;font-weight:700;color:#2a2a50;margin:22px 0 10px}
+.content-body p{font-size:14.5px;line-height:1.85;margin-bottom:12px;color:#3a3a3a}
+.content-body p.highlight{color:#c0392b;font-weight:600}
+.content-body .quote-block{border-left:4px solid #c9a84c;padding:14px 20px;background:rgba(201,168,76,.08);border-radius:0 8px 8px 0;margin:20px 0;font-style:italic;color:#4a4a4a;font-size:15px;line-height:1.8}
+.content-body ul{margin:10px 0 16px 0;padding-left:0;list-style:none}
+.content-body ul li{font-size:14px;line-height:1.8;color:#3a3a3a;padding:4px 0 4px 20px;position:relative}
+.content-body ul li::before{content:"●";position:absolute;left:0;color:#c9a84c;font-size:10px;top:7px}
+.content-body ul.sub li::before{content:"○";color:#aaa;font-size:10px;top:7px}
+.content-body ul.sub{margin-left:20px}
+.content-body ul li b,.content-body ul li strong{color:#1a1a35}
+.content-body .divider{border:none;border-top:1px solid #e0dbd0;margin:28px 0}
+.content-body .callout{background:rgba(26,26,53,.04);border:1px solid rgba(26,26,53,.1);border-radius:10px;padding:18px 22px;margin:20px 0}
+.content-body .callout h4{margin-top:0;color:#1a1a35}
+.content-body .keypoint{background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.05));border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:16px 20px;margin:20px 0;font-size:14px;color:#3a3530;line-height:1.8}
+.content-body .keypoint strong{color:#7a5f10}
+.content-body .homework{background:rgba(26,26,53,.03);border:1px dashed rgba(26,26,53,.2);border-radius:10px;padding:18px 22px;margin:24px 0}
+.content-body .homework h4{color:#1a1a35;margin-bottom:10px;margin-top:0}
+.content-body .homework p{margin-bottom:8px}
+
+/* Tables */
+.content-body table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13.5px}
+.content-body table th{background:#1a1a35;color:#c9a84c;padding:10px 14px;text-align:left;font-weight:600}
+.content-body table td{padding:10px 14px;border-bottom:1px solid #e5e0d8;vertical-align:top;line-height:1.7}
+.content-body table tr:nth-child(even) td{background:rgba(201,168,76,.04)}
+.content-body table tr:hover td{background:rgba(201,168,76,.08)}
+.content-body table td b{color:#1a1a35}
+.content-body table td.level{font-weight:700;color:#1a1a35;white-space:nowrap}
+.content-body table td.vibe{color:#5a5a7a;font-style:italic}
+
+/* ── Notes System ── */
+.section-wrapper{position:relative}
+.note-toggle-btn{display:flex;align-items:center;gap:6px;background:none;border:1px solid #d5cfc5;color:#7a7a8a;padding:6px 14px;border-radius:20px;font-size:12px;font-family:inherit;cursor:pointer;margin:16px 0 8px;transition:all .2s}
+.note-toggle-btn:hover{border-color:#c9a84c;color:#c9a84c;background:rgba(201,168,76,.06)}
+.note-toggle-btn.has-notes{border-color:#c9a84c;color:#c9a84c;background:rgba(201,168,76,.08)}
+.note-panel{background:#fff;border:1px solid #e0dbd0;border-radius:12px;margin:8px 0 24px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.note-tabs{display:flex;border-bottom:1px solid #eee}
+.note-tab{flex:1;padding:10px;text-align:center;font-size:12.5px;font-weight:600;cursor:pointer;color:#999;border-bottom:2px solid transparent;transition:all .2s}
+.note-tab.active{color:#1a1a35;border-bottom-color:#c9a84c}
+.note-tab-content{padding:16px}
+.note-textarea{width:100%;border:1px solid #e0dbd0;border-radius:8px;padding:10px 14px;font-size:13px;font-family:inherit;resize:vertical;min-height:80px;line-height:1.7;color:#2d2d2d;outline:none;transition:border .2s}
+.note-textarea:focus{border-color:#c9a84c}
+.note-save-btn{margin-top:8px;background:#1a1a35;color:#c9a84c;border:none;padding:7px 18px;border-radius:6px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+.note-save-btn:hover{background:#2a2a50}
+.note-entry{background:#f9f7f3;border-radius:8px;padding:12px 14px;margin-bottom:10px;border-left:3px solid #c9a84c}
+.note-entry-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.note-author{font-size:11px;font-weight:700;color:#1a1a35}
+.note-time{font-size:10px;color:#aaa}
+.note-text{font-size:13px;line-height:1.7;color:#3a3a3a;white-space:pre-wrap}
+.note-delete-btn{background:none;border:none;color:#ccc;cursor:pointer;font-size:13px;padding:2px 4px}
+.note-delete-btn:hover{color:#e74c3c}
+.no-notes{font-size:13px;color:#bbb;text-align:center;padding:20px 0}
+.public-input-row{display:flex;gap:8px;margin-bottom:10px}
+.name-input{border:1px solid #e0dbd0;border-radius:6px;padding:8px 12px;font-size:13px;font-family:inherit;flex:1;outline:none;transition:border .2s}
+.name-input:focus{border-color:#c9a84c}
+.export-bar{padding:10px 16px;background:#f5f0e8;border-top:1px solid #eee;display:flex;gap:8px;align-items:center;font-size:11px;color:#999}
+.export-btn{background:none;border:1px solid #d5cfc5;color:#7a7a8a;padding:4px 10px;border-radius:4px;font-size:11px;font-family:inherit;cursor:pointer;transition:all .2s}
+.export-btn:hover{border-color:#1a1a35;color:#1a1a35}
+
+/* ── Todo Checklist ── */
+.todo-list{margin:12px 0}
+.todo-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #f0ebe3}
+.todo-item:last-child{border-bottom:none}
+.todo-checkbox{width:18px;height:18px;min-width:18px;border:2px solid #c9a84c;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;background:#fff;transition:all .2s;margin-top:2px}
+.todo-checkbox.checked{background:#c9a84c;border-color:#c9a84c}
+.todo-text{font-size:14px;line-height:1.7;color:#3a3a3a}
+.todo-text.checked{text-decoration:line-through;color:#aaa}
+
+/* ── Progress Bar ── */
+.progress-bar-wrap{height:3px;background:rgba(255,255,255,.1)}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#c9a84c,#e8c97a);transition:width .4s ease}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  .chapter-banner{padding:24px 20px}
+  .content-body{padding:20px 20px 48px}
+  .content-body h3{font-size:16px}
+}
+
+/* Scrollbar */
+.main-area::-webkit-scrollbar{width:6px}
+.main-area::-webkit-scrollbar-track{background:#f0ebe3}
+.main-area::-webkit-scrollbar-thumb{background:#d5cfc5;border-radius:3px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+
+// ══════════════════════════════════════════════
+//  HANDBOOK CONTENT DATA
+// ══════════════════════════════════════════════
+const HANDBOOK = [
+  {
+    id: "intro",
+    emoji: "✝️",
+    title: "引言與心法",
+    subtitle: "心法與初衷",
+    desc: "合一不是聲音的一致，而是心靈的共鳴；帶領不是權力的行使，而是捨己的成全。",
+    sections: [
+      {
+        id: "intro-preface",
+        title: "卷首語：心法與初衷",
+        content: [
+          { type: "quote", text: "「合一不是聲音的一致，而是心靈的共鳴；帶領不是權力的行使，而是捨己的成全。」" },
+          { type: "p", text: "在敬拜團中，MD（Music Director，音樂總監）的角色絕非音樂上的獨裁者，而是全團的「屬靈翻譯官」與「僕人領袖」。" },
+          { type: "p", text: "這本手冊的初衷，是為了建立一套兼具 Flow 與專業秩序的運作系統。" },
+          { type: "p", text: "我們深信，卓越的技術是為了承載更深遠的榮耀。當 MD 選擇放下個人的音樂主權，轉而敏銳於主領的感動與牧者的帶領時，音樂就不再只是聲音，而是通往神寶座的門徑。我們追求的，是讓樂團在「捨己」中達成屬靈的「共鳴」，在「專業」中展現信仰的「真實」。" },
+        ]
+      },
+      {
+        id: "intro-notes",
+        title: "使用手冊前：注意事項",
+        content: [
+          { type: "h4", text: "三大核心原則" },
+          { type: "list", items: [
+            { text: "先對齊神，再對齊音符：MD 在上台前，必須先與主領、牧者對齊當天服事的異象，而非僅止於對齊 BPM。" },
+            { text: "Talkback 是為了建立安全感：你的指令應是樂手的導航，而非干擾。語氣應堅定而溫柔，嚴禁在麥克風中洩露負面情緒。", highlight: true },
+            { text: "靈活優於死板：SOP 是為了因應突發狀況，但聖靈的帶領大於手冊。若主領有突發感動，MD 應優先跟隨聖靈的流。" },
+          ]}
+        ]
+      }
+    ]
+  },
+  {
+    id: "ch1",
+    emoji: "⚓",
+    title: "第一章",
+    subtitle: "職責、角色與屬靈次序",
+    englishTitle: "Authority & Order",
+    desc: "要讓第一章從「文字規章」轉化為「團隊共識」，我們需要透過思辨對話與模擬練習，讓 MD 真正理解他在權力結構中的定位。",
+    sections: [
+      {
+        id: "ch1-roles",
+        title: "1.1 屬靈翻譯官的角色",
+        content: [
+          { type: "p", text: "MD 負責將主領的「感性直覺」轉化為樂手的「理性執行」。當主領說「我們要更火熱」，MD 需立刻下令：「鼓進 16 分音符 Hi-hat」。" },
+          { type: "p", text: "MD 的雙重角色：" },
+          { type: "list", items: [
+            { text: "翻譯官：將感性直覺化為理性執行。主領說「溫柔」→ MD 指令「Pad 長音，撤鼓」" },
+            { text: "守望者：減少頻率衝突，追求會眾的最清晰敬拜聲。頻譜守望，主動減少干擾。" },
+          ]},
+          { type: "h4", text: "探討：「翻譯官」的張力" },
+          { type: "callout", items: [
+            { text: "情境題：如果主領當下的感動是「安靜」，但牧者突然衝上台大聲宣告，身為 MD，你的第一反應是跟隨主領維持安靜，還是立刻推動樂團支撐牧者？" },
+            { text: "討論點：在新生命小組教會的文化中，「次序」的最高優先級是誰？為什麼？" },
+          ]},
+          { type: "h4", text: "探討：「守望者」的邊界" },
+          { type: "callout", items: [
+            { text: "提問：當一個非常有才華的吉他手彈奏了一段非常華麗、技術難度高但「完全不合適當下氛圍」的 Solo 時，MD 應該在 Talkback 直接制止，還是事後再說？" },
+            { text: "討論點：追求「音樂卓越」與「會眾專注」之間，MD 如何取捨？" },
+          ]},
+        ]
+      },
+      {
+        id: "ch1-authority",
+        title: "1.2 權柄次序的對齊",
+        content: [
+          { type: "p", text: "MD 需確保牧者與主領在台上擁有絕對的心理安全感。你的存在是為了「遮蓋」與「支撐」，而非「表現」。" },
+          { type: "keypoint", text: "屬靈次序：以牧者與主領為優先。支撐而非干擾。讓音樂的頻率，剛好托住牧者的聲線。" },
+          { type: "h4", text: "實際預備：建立「主領/牧者語典」" },
+          { type: "p", text: "動作：與主領坐下來，針對他常用的「感性形容詞」達成音樂上的共識。" },
+          { type: "list", items: [
+            { text: "當主領說「我們要宣告」→ MD 指令：能量 Lv 7，加入大鼓四分音符。" },
+            { text: "當主領說「讓我們沉浸」→ MD 指令：能量 Lv 2，鋼琴長音，撤掉節奏組。" },
+            { text: "當主領說「再一次」→ MD 需預判：他是要回副歌，還是要重複最後一句（Tag）？" },
+          ]},
+          { type: "h4", text: "實際預備：頻譜守望（聲音平衡的預備）" },
+          { type: "list", items: [
+            { text: "動作：在 Sound Check 時，MD 不要只顧自己的樂器，要拿下耳機（或用場內監聽）聽整體頻率。" },
+            { text: "檢查：鋼琴低音部是否跟 Bass 手撞在一起？（若是，MD 需請鋼琴手左手彈少一點）" },
+            { text: "電吉他的高頻是否蓋過了主領的歌聲？（若是，MD 需協調音色）" },
+          ]},
+          { type: "h4", text: "角色演練（Role Play）" },
+          { type: "list", items: [
+            { text: "練習：隨機指定一位同工扮演「失控的樂手」（故意彈得太花或太大聲），練習 MD 如何用專業且溫和的語氣在 Talkback 修正他。" },
+            { text: "核心練習語句：「XX（名字），這段我們把空間留給主領，你先 Diamond（刷下放掉）就好。」" },
+          ]},
+          { type: "homework", title: "第一章思考作業", items: [
+            "請列出你最常配合的 2 位主領，並寫下他們在敬拜中最常出現的「非語言信號」（例如：閉眼、揮手、拿麥克風的姿勢），以及你對應的音樂指令是什麼？",
+          ]},
+        ]
+      }
+    ]
+  },
+  {
+    id: "ch2",
+    emoji: "🗣️",
+    title: "第二章",
+    subtitle: "指令與語言標準化",
+    englishTitle: "The MD Language",
+    desc: "指令如果不標準，樂團就會像導航系統故障的賽車，充滿不確定性。要深入這一章，我們不能只背口訣，必須建立「反射神經」。",
+    sections: [
+      {
+        id: "ch2-why",
+        title: "2.1 為什麼「絕對」比「正確」更重要",
+        content: [
+          { type: "keypoint", text: "核心觀念：MD 下錯指令並不可怕，可怕的是「沒有指令」。寧可全團一起錯（整齊的錯），也不要各彈各的（雜亂的對）。" },
+          { type: "h4", text: "「猶豫是混亂的開始」" },
+          { type: "list", items: [
+            { text: "思辨題：如果主領進錯段落，你發現了，但你遲疑了 2 秒才下指令，這時樂團會發生什麼事？（有人跟主領，有人跟原譜，音樂瞬間散掉）" },
+            { text: "核心觀念：MD 下錯指令並不可怕，可怕的是「沒有指令」" },
+          ]},
+          { type: "h4", text: "「預判 2 小節」的心理學" },
+          { type: "list", items: [
+            { text: "提問：為什麼不能在進副歌的前 1 秒才倒數？" },
+            { text: "討論點：樂手需要時間切換效果器、換鼓棒、調整呼吸。MD 的職責是消除樂手的「焦慮感」。" },
+          ]},
+        ]
+      },
+      {
+        id: "ch2-glossary",
+        title: "2.2 核心指令集（The Glossary）",
+        content: [
+          { type: "p", text: "為了落實標準化，建議在新生命敬拜團中建立一套「MD 指令小卡」，定義最精簡的詞彙：" },
+          { type: "h4", text: "1. 段落指導（Roadmap Cues）" },
+          { type: "list", items: [
+            { text: "標準格式：[目標段落] + [倒數]" },
+            { text: "範例：「Next: Bridge, 4, 3, 2, 1」" },
+            { text: "進階：若要連跳兩個段落，需強調「Skip」。例：「Skip V2, go to Chorus, 4, 3, 2, 1」" },
+          ]},
+          { type: "h4", text: "2. 樂器控制（Instrumentation Cues）" },
+          { type: "list", items: [
+            { text: "All out：全團停（通常剩 Pad 或鋼琴長音）" },
+            { text: "Full band in：全團進（要有爆發感）" },
+            { text: "Drop the beat：鼓手停，但旋律樂器維持" },
+            { text: "Kick only：只要大鼓的穩定重拍" },
+          ]},
+          { type: "h4", text: "3. 特殊動作（Action Cues）" },
+          { type: "list", items: [
+            { text: "Diamond（鑽石）：第一拍重刷後放掉，留白。常用於詩歌結尾或轉折。" },
+            { text: "Build-up（推動）：能量持續往上，通常搭配小鼓或大鼓的密集擊打。" },
+            { text: "Unison（齊奏）：全團彈奏同一個切分音節奏。" },
+          ]},
+        ]
+      },
+      {
+        id: "ch2-drills",
+        title: "2.3 即時拆彈術：實戰模擬（The Drills）",
+        content: [
+          { type: "p", text: "這部分是 MD 最需要的「肌肉記憶」預備。" },
+          { type: "h4", text: "1.「跟隨主領」練習（Follow the Leader）" },
+          { type: "list", items: [
+            { text: "操作：排練時，請主領故意在副歌結束後，不按牌理出牌直接唱主歌。" },
+            { text: "MD 反應：必須在 1 秒內對麥克風喊：「跟主領，Go to V1，4, 3, 2, 1」" },
+            { text: "目的：訓練 MD 的耳朵隨時鎖定主領，而非只看譜。" },
+          ]},
+          { type: "h4", text: "2.「重啟節奏」練習（The Reset）" },
+          { type: "list", items: [
+            { text: "操作：讓鼓手故意打越快，快到樂團崩潰邊緣。" },
+            { text: "MD 反應：強制切斷音樂或大聲倒數：「聽我！1, 2, 3, 4」" },
+            { text: "目的：建立 MD 在混亂中奪回主導權的勇氣。" },
+          ]},
+          { type: "h4", text: "3.「無聲指令」練習（Hand Signals）" },
+          { type: "list", items: [
+            { text: "操作：規定 MD 不能說話，只能用手勢引導樂團能量（1-10 層次）。" },
+            { text: "目的：訓練 MD 的肢體語言，確保與樂手間有眼神交流。" },
+          ]},
+          { type: "homework", title: "第二章思考作業", items: [
+            "請錄下你本週服事或是團練的 Talkback，事後檢討：你的指令是否在 2 小節前發出？你有沒有贅字（例如：那個...我們現在準備要進...副歌喔）？",
+            "請練習把這句話縮短成 5 個字以內。",
+          ]},
+        ]
+      }
+    ]
+  },
+  {
+    id: "ch3",
+    emoji: "📊",
+    title: "第三章",
+    subtitle: "動態能量座標",
+    englishTitle: "The 1-10 Scale",
+    desc: "第三章是讓樂團從「各彈各的」進化到「集體呼吸」的關鍵。如果沒有這套座標，主領說「大聲一點」，鼓手可能加了力度，但電吉他卻開了超大聲的破音，結果聲音變髒而不是變強。",
+    sections: [
+      {
+        id: "ch3-concept",
+        title: "3.1 能量不等於音量",
+        content: [
+          { type: "keypoint", text: "核心觀念：能量是指「音樂的密度與推動力」。沉默也是一種高能量的表達。學習「克制」是 MD 最難的修練。" },
+          { type: "h4", text: "「張力」的來源" },
+          { type: "list", items: [
+            { text: "思辨題：為什麼有時候只有鋼琴單音（Lv 1），帶給會眾的屬靈震撼力卻比 Full Band（Lv 10）更大？" },
+            { text: "討論點：能量是指「音樂的密度與推動力」。" },
+            { text: "MD 需引導樂手理解：沉默也是一種高能量的表達。" },
+          ]},
+          { type: "h4", text: "層次的「留白」" },
+          { type: "list", items: [
+            { text: "提問：如果第一遍副歌就衝到 Lv 8，那最後一遍大讚美我們要去哪裡？" },
+            { text: "討論點：MD 必須像導演一樣控節奏。如果前面太滿，後面就沒有驚喜。" },
+            { text: "學習「克制」是 MD 最難的修練。" },
+          ]},
+        ]
+      },
+      {
+        id: "ch3-scale",
+        title: "3.2 新生命 1-10 能量詳解表",
+        content: [
+          { type: "p", text: "為了讓團員有畫面感，MD 需與各樂器組定義每個等級的「動作」：" },
+          { type: "table",
+            headers: ["能量等級", "氛圍描述", "樂器具體動作（Action）"],
+            rows: [
+              ["Lv 1-2", "極簡／空靈", "KB: 只有 Ambient Pad 長音。\nGT: 只有空間系音色（Dotted 8th delay）。\nDrums: 全停。"],
+              ["Lv 3-4", "建立／行進", "AG: 開始 8 分音符穩定刷奏。\nPiano: 簡單律動。\nDrums: 輕敲邊框（Rimshot）或 Shaker。"],
+              ["Lv 5-6", "推動／層次", "Bass: 進入，彈奏根音穩定結構。\nDrums: 大鼓穩定四分音符（Four on the floor）。\nEG: 加上輕微 Overdrive。"],
+              ["Lv 7-8", "飽滿／宣告", "Drums: 進入標準節奏（Groove），小鼓有力。\nEG: 切換到 Lead 音色，掃弦增加。\nKB: 鋼琴高八度堆疊。"],
+              ["Lv 9-10", "巔峰／慶典", "Full Band: 力度全開，情緒最激昂。\nDrums: 頻繁的使用過門（Fill-ins）與鈸片。\nUnison: 全團節奏整齊劃一。"],
+            ]
+          },
+        ]
+      },
+      {
+        id: "ch3-drills",
+        title: "3.3 MD 的動態操練（Dynamic Drills）",
+        content: [
+          { type: "h4", text: "1.「數字階梯」練習（The Staircase）" },
+          { type: "list", items: [
+            { text: "操作：選一首大家熟悉的詩歌副歌（例如《國度降臨》），MD 對麥克風喊數字，每兩小節跳一階（例：2 → 4 → 6 → 8 → 10 → 1）。" },
+            { text: "目的：訓練樂手對「刻度」的敏感度。確保 MD 說「能量 4」時，全團能瞬間整齊降下來。" },
+          ]},
+          { type: "h4", text: "2.「極限轉換」練習（The Switch）" },
+          { type: "list", items: [
+            { text: "操作：讓樂團維持在 Lv 9 的高能量，MD 突然大喊：「Drop to 1！」" },
+            { text: "目的：練習「瞬間靜止」的震懾力。這在新生命牧者感言時非常實用。" },
+          ]},
+          { type: "h4", text: "3.「主領情緒跟隨」模擬（Emotional Mirroring）" },
+          { type: "list", items: [
+            { text: "操作：讓主領嘗試不同的禱告語氣（溫柔 → 激昂 → 呼求）。" },
+            { text: "MD 反應：不看譜，只根據主領的聲音給出數字指令（例：「現在 Lv 3」、「準備 Build 到 7」）。" },
+          ]},
+          { type: "homework", title: "第三章思考作業", items: [
+            "請挑選下週的一首慢歌與一首快歌。在譜上標註出：哪裡是這首歌的 Lv 10？哪裡是 Lv 3？並寫下你打算在哪個小節下達『推動（Build）』的指令。",
+          ]},
+        ]
+      }
+    ]
+  },
+  {
+    id: "ch4",
+    emoji: "🎯",
+    title: "第四章",
+    subtitle: "牧者應變專章",
+    englishTitle: "Pastor's Flow",
+    desc: "第四章是新生命小組教會最獨特的「國度實戰」。在我們的文化中，敬拜不只是唱完五首歌，而是與牧者的信息動態結合，帶出國度的權能。MD 在這一章的角色是「牧者的音樂副官」。",
+    sections: [
+      {
+        id: "ch4-sensitivity",
+        title: "4.1 靈敏度與順服（Sensitivity & Submission）",
+        content: [
+          { type: "keypoint", text: "核心觀念：「快」就是順服。MD 的耳朵必須有一半隨時掛在牧師的麥克風上。在新生命，我們追求的是「共鳴」，讓音樂的頻率剛好托住牧者的聲線。" },
+          { type: "h4", text: "「2 秒鐘」的屬靈含義" },
+          { type: "list", items: [
+            { text: "思辨題：牧師走向台前，如果你還在彈 Lv 8 的大讚美，會發生什麼事？（牧師必須大聲壓過音樂，會眾的專注力被撕裂）" },
+            { text: "核心觀念：「快」就是順服。MD 的耳朵必須有一半隨時掛在牧師的麥克風上。" },
+          ]},
+          { type: "h4", text: "「支援」而非「干擾」" },
+          { type: "list", items: [
+            { text: "提問：牧師正在感性地呼召人流淚認罪，這時電吉他彈了一個很帥的藍調 Solo。這叫「卓越」還是「干擾」？" },
+            { text: "討論點：MD 必須定義什麼是「支撐性音色」。在新生命，我們追求的是「共鳴」，讓音樂的頻率剛好托住牧者的聲線。" },
+          ]},
+        ]
+      },
+      {
+        id: "ch4-signals",
+        title: "4.2 新生命牧者信號解碼（The Signal Table）",
+        content: [
+          { type: "p", text: "MD 必須帶領樂手觀察牧者的肢體語言：" },
+          { type: "table",
+            headers: ["牧者動作（The Signal）", "屬靈意涵", "MD 的即時指令（Action）"],
+            rows: [
+              ["放下麥克風／走向台前", "即將分享／感言。", "Lv 1-2。Only Pad/Piano，撤掉所有節奏。"],
+              ["反覆強調關鍵字／語速加快", "靈裡開始激昂、宣告。", "Build up to Lv 4-5。加強低音頻率，準備推動。"],
+              ["閉眼深呼吸／長暫停", "進入深層默想或等候。", "Lv 1。極簡，甚至只有單個長音，留白。"],
+              ["高舉雙手／大聲宣告", "權柄釋放、國度宣告。", "Lv 7-9。加入鼓組穩定重拍，全團堆疊。"],
+              ["眼神看向主領／MD", "準備回歌或結束。", "Get ready！預告段落，「回副歌，4, 3, 2, 1」。"],
+            ]
+          },
+          { type: "h4", text: "實作預備：牧者 Flow 的模擬練習" },
+          { type: "list", items: [
+            { text: "BGM 切換練習：隨機播放一段牧者過去講道的錄音，MD 帶領樂團根據錄音的情緒起伏，即時切換能量等級。" },
+            { text: "斷點預判練習：模擬牧師說完「阿們」或「我們一起來禱告」的瞬間，MD 反應：必須在那 0.5 秒內，下令進最強的音樂（Lv 9-10）或下首歌的 Intro。" },
+            { text: "音色預設討論：與 KB 手討論：牧師講道時，哪種 Pad 音色最不吃人聲？與電吉他手討論：哪種 Delay 頻率最能製造空間感又不刺耳？" },
+          ]},
+          { type: "homework", title: "第四章思考作業", items: [
+            "請回憶過去三週，牧師呼召時，樂團有哪些時刻做得很好（音樂與話語合一）？",
+            "哪些時刻讓你覺得尷尬（音樂太吵或太乾）？請寫下改善這尷尬時刻的一個具體指令。",
+            "如果今天是第一次配搭的牧者可以怎麼辦？",
+          ]},
+        ]
+      }
+    ]
+  },
+  {
+    id: "ch5",
+    emoji: "💪",
+    title: "第五章",
+    subtitle: "Todo 與實務練習",
+    englishTitle: "Training & Maintenance",
+    desc: "第五章是將前四章的「知識」轉化為「肌肉記憶」的關鍵。這一章的深化重點在於：讓團隊擁有「同一套語言」與「同一個呼吸」。",
+    sections: [
+      {
+        id: "ch5-glossary",
+        title: "5.1 術語整合（The Glossary）",
+        content: [
+          { type: "p", text: "為了落實標準化，建議在新生命敬拜團中統一定義以下「關鍵黑話」：" },
+          { type: "h4", text: "拍號與節奏" },
+          { type: "list", items: [
+            { text: "Straight（直拍）vs. Swing（搖擺）：確保鼓手與 Bass 手在同一個溝通頻率。" },
+            { text: "Stop（驟停）：所有的音在同一時間消失。" },
+          ]},
+          { type: "h4", text: "動態與動作（The Actions）" },
+          { type: "list", items: [
+            { text: "Diamond（鑽石）：全團第一拍刷下去後放掉，保持大片的空白。" },
+            { text: "Unison（齊奏）：全團彈奏同一個節奏型態（通常出現在結尾或過渡）。" },
+            { text: "Loop（循環）：重複某一段落，直到 MD 下一個指令。" },
+          ]},
+          { type: "h4", text: "視覺手勢（Hand Signals）" },
+          { type: "list", items: [
+            { text: "握拳：準備結束（Ending）。" },
+            { text: "手指向上：回副歌（Chorus）。" },
+            { text: "手掌向下推：能量降低（Bring it down）。" },
+          ]},
+        ]
+      },
+      {
+        id: "ch5-training",
+        title: "5.2 壓力測試與實務練習（The Drills）",
+        content: [
+          { type: "p", text: "這部分是 MD 養成計畫的「健身房」，需要定期排入團練中：" },
+          { type: "h4", text: "1.「能量雲霄飛車」練習（1-10 Dynamic Switch）" },
+          { type: "list", items: [
+            { text: "操作：MD 隨機喊數字（例：2 → 9 → 5 → 1 → 10），樂團必須在 1 小節內完成能量切換。" },
+            { text: "核心挑戰：能量切換時，速度（BPM）絕對不能變。通常能量大會變快，能量小會變慢，這是 MD 要校正的重點。" },
+          ]},
+          { type: "h4", text: "2.「自由靈歌對話」演練（The Spontaneous Flow）" },
+          { type: "list", items: [
+            { text: "操作：指定一位主領進行 3 分鐘的「即興禱告／呼求」。" },
+            { text: "MD 指令重點：前 1 分鐘：指定「Solo Instrument」，如：只有電吉他用 Ambient 烘托。中 1 分鐘：加入「Rhythmic Layer」，如：鼓手輕敲鈸片（Cymbal Swell）。後 1 分鐘：全團「Build up」，支撐禱告高潮。" },
+            { text: "目標：訓練 MD 調度樂器的「進出場時機」。" },
+          ]},
+          { type: "h4", text: "3.「無譜轉場」挑戰（Blind Transitions）" },
+          { type: "list", items: [
+            { text: "操作：從一首快歌（例：BPM 128, Key G）轉到一首慢歌（例：BPM 72, Key C）。" },
+            { text: "MD 反應：練習在 Talkback 快速報出「Key & BPM」，並指定誰領頭帶入。" },
+          ]},
+          { type: "homework", title: "第五章思考作業", items: [
+            "請列出 3 個你們團隊中最常混淆的術語（例如：回「副歌」還是回「第二次副歌」？）。",
+            "並為這 3 個狀況定義出唯一的、絕對不會搞混的「新標準指令」。",
+          ]},
+        ]
+      }
+    ]
+  },
+  {
+    id: "ch6",
+    emoji: "❤️",
+    title: "第六章",
+    subtitle: "養成守則與生命建造",
+    englishTitle: "Mentoring",
+    desc: "第六章是整本手冊的「靈魂」，也是將 MD 從一個「技術領袖」昇華為「屬靈領袖」的關鍵。在新生命小組教會，我們不只看重專業（Professional），更看重關係（Relationship）與門徒訓練（Discipleship）。",
+    sections: [
+      {
+        id: "ch6-correction",
+        title: "6.1 糾正與鼓勵的藝術",
+        content: [
+          { type: "keypoint", text: "如果沒有這一章，MD 的指令會變得很冰冷；有了這一章，你的指令將帶有溫度和權柄。" },
+          { type: "h4", text: "「監視」與「守望」的一線之隔" },
+          { type: "list", items: [
+            { text: "思辨題：當你在對講機（Talkback）指出團員彈錯時，你的動機是「怕他毀了這場表演」，還是「想幫他找回敬拜的節奏」？" },
+            { text: "核心觀念：信任是指令的燃料。如果團員信任你，你的指令是導航；如果不信任，你的指令就是噪音。" },
+          ]},
+          { type: "h4", text: "處理「張力」的次序" },
+          { type: "list", items: [
+            { text: "提問：在台上發生嚴重失誤導致氣氛尷尬，下台後 MD 的第一句話應該是什麼？" },
+            { text: "討論點：先處理「人」，再處理「事」。技術可以練，但受傷的心很難修補。" },
+          ]},
+          { type: "h4", text: "事後檢討（AAR）的標準流程 — 三步驟回饋法" },
+          { type: "list", items: [
+            { text: "Step 1：肯定（Validation）——「剛才第三首歌的轉場，Bass 手跟鼓手的默契非常好，撐住了氛圍。」" },
+            { text: "Step 2：事實（Fact）——「但在牧師上台時，我們的能量等級（Lv）降得慢了約 5 秒，導致牧師前兩句話被蓋過。」" },
+            { text: "Step 3：行動（Action）——「下次我們練習：只要牧師一拿麥克風，全團立即 Diamond（放掉）。」" },
+          ]},
+        ]
+      },
+      {
+        id: "ch6-safety",
+        title: "6.2 建立團隊的安全感",
+        content: [
+          { type: "keypoint", text: "好的 MD 讓樂手覺得「只要聽他的，就不用太擔心出錯」。在愛中轉化張力，讓每一次服事都是一場捨己的祭。" },
+          { type: "h4", text: "「一對一」的生命對齊（Connection）" },
+          { type: "list", items: [
+            { text: "動作：每月找一位團員喝咖啡。不談技術，只談他最近的敬拜生活、他在台上的壓力和喜樂。" },
+            { text: "目的：建立私下的信任感，這樣在台上即便是嚴厲的指令，對方也能接收到背後的愛。" },
+          ]},
+          { type: "h4", text: "「捨己」的集體儀式" },
+          { type: "list", items: [
+            { text: "操作：每次服事前，MD 帶領全團做一個「放下主權」的禱告。" },
+            { text: "禱告範例：「主啊，我放下今天想表現的 Solo，我放下我對音樂的堅持，我選擇成全我的主領，我選擇與我的團隊共鳴。」" },
+          ]},
+          { type: "h4", text: "建立「容錯文化」（Safe to Fail）" },
+          { type: "list", items: [
+            { text: "練習：在排練時，MD 可以讓大家「試錯」，並示範如何修正。" },
+            { text: "目標：讓樂手知道 MD 是他們的後盾（主耶穌更是），他們可以勇敢嘗試，因為 MD 會在混亂中把大家帶回來。" },
+          ]},
+          { type: "homework", title: "第六章思考作業", items: [
+            "請回顧你團隊中的每一位成員，寫下他們每個人在音樂上的一個「強項」。並在下一次排練時，找機會公開肯定他們的這個特點。",
+            "同時，思考你有沒有在麥克風中過度介入（Over-controlling）的情況？",
+          ]},
+        ]
+      }
+    ]
+  },
+  {
+    id: "conclusion",
+    emoji: "🌟",
+    title: "結語",
+    subtitle: "在專業中得著自由",
+    desc: "這份手冊是為了讓樂團在專業中得著自由。當我們把技術練成直覺，我們才能在台上全心注目神。",
+    sections: [
+      {
+        id: "conclusion-main",
+        title: "在專業中得著自由",
+        content: [
+          { type: "p", text: "這份手冊是為了讓樂團在專業中得著自由。當我們把技術練成直覺，我們才能在台上全心注目神。" },
+          { type: "p", text: "讓我們透過實際量化的數據來自我覺察，邁向一個全方位成熟的敬拜者。" },
+          { type: "h4", text: "MD 每週簡易 Todo List（行動守則）" },
+          { type: "todo", items: [
+            "術語整合檢核：確保新團員都懂我們的 Roadmap 標記。",
+            "默契培養：每月安排一次「純即興練習」，不看譜，只聽 MD 指令與彼此。",
+            "生命對齊：排練前，與主領分享這週對歌曲的神學領受或感動。",
+            "牧者對接：確認牧師當天的講道主題，調整樂團最後的回應動態。",
+          ]},
+          { type: "keypoint", text: "你都明白了麻？讓我們透過實際量化的數據來自我覺察，邁向一個全方位成熟的敬拜者。" },
+        ]
+      }
+    ]
+  }
+];
+
+// ══════════════════════════════════════════════
+//  STORAGE HELPERS
+// ══════════════════════════════════════════════
+const STORAGE = {
+  getPrivateNote: (sectionId) => {
+    try { return JSON.parse(localStorage.getItem(`md_priv_${sectionId}`) || 'null'); } catch { return null; }
+  },
+  setPrivateNote: (sectionId, data) => {
+    localStorage.setItem(`md_priv_${sectionId}`, JSON.stringify(data));
+  },
+  getPublicNotes: (sectionId) => {
+    try { return JSON.parse(localStorage.getItem(`md_pub_${sectionId}`) || '[]'); } catch { return []; }
+  },
+  addPublicNote: (sectionId, note) => {
+    const notes = STORAGE.getPublicNotes(sectionId);
+    notes.push({ ...note, id: Date.now() + Math.random() });
+    localStorage.setItem(`md_pub_${sectionId}`, JSON.stringify(notes));
+    return notes;
+  },
+  deletePublicNote: (sectionId, noteId) => {
+    const notes = STORAGE.getPublicNotes(sectionId).filter(n => n.id !== noteId);
+    localStorage.setItem(`md_pub_${sectionId}`, JSON.stringify(notes));
+    return notes;
+  },
+  getUserName: () => localStorage.getItem('md_handbook_username') || '',
+  setUserName: (name) => localStorage.setItem('md_handbook_username', name),
+  exportAll: () => {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith('md_')) data[key] = localStorage.getItem(key);
+    }
+    return JSON.stringify(data, null, 2);
+  },
+  importAll: (jsonStr) => {
+    const data = JSON.parse(jsonStr);
+    Object.entries(data).forEach(([k, v]) => { if (k.startsWith('md_')) localStorage.setItem(k, v); });
+  }
+};
+
+function formatTime(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('zh-TW') + ' ' + d.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
+}
+
+// ══════════════════════════════════════════════
+//  CONTENT RENDERER
+// ══════════════════════════════════════════════
+function renderContent(node, idx) {
+  switch (node.type) {
+    case 'p':
+      return <p key={idx} className={node.highlight ? 'highlight' : ''}>{node.text}</p>;
+    case 'h3':
+      return <h3 key={idx}>{node.text}</h3>;
+    case 'h4':
+      return <h4 key={idx}>{node.text}</h4>;
+    case 'quote':
+      return <div key={idx} className="quote-block">{node.text}</div>;
+    case 'divider':
+      return <hr key={idx} className="divider" />;
+    case 'keypoint':
+      return <div key={idx} className="keypoint"><strong>核心觀念：</strong>{node.text}</div>;
+    case 'list':
+      return (
+        <ul key={idx}>
+          {node.items.map((item, i) => (
+            <li key={i} style={item.highlight ? { color: '#c0392b', fontWeight: 600 } : {}}>
+              {typeof item === 'string' ? item : item.text}
+            </li>
+          ))}
+        </ul>
+      );
+    case 'callout':
+      return (
+        <div key={idx} className="callout">
+          {node.items.map((item, i) => (
+            <p key={i} style={{ marginBottom: i < node.items.length - 1 ? 8 : 0 }}>
+              {typeof item === 'string' ? item : item.text}
+            </p>
+          ))}
+        </div>
+      );
+    case 'table':
+      return (
+        <div key={idx} style={{ overflowX: 'auto' }}>
+          <table>
+            <thead>
+              <tr>{node.headers.map((h, i) => <th key={i}>{h}</th>)}</tr>
+            </thead>
+            <tbody>
+              {node.rows.map((row, i) => (
+                <tr key={i}>
+                  {row.map((cell, j) => (
+                    <td key={j} className={j === 0 ? 'level' : j === 1 ? 'vibe' : ''}
+                        style={{ whiteSpace: 'pre-line' }}>
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    case 'homework':
+      return (
+        <div key={idx} className="homework">
+          <h4>📝 {node.title || '思考作業'}</h4>
+          {node.items.map((item, i) => <p key={i}>• {item}</p>)}
+        </div>
+      );
+    case 'todo':
+      return <TodoChecklist key={idx} items={node.items} sectionId="conclusion-todos" />;
+    default:
+      return null;
+  }
+}
+
+// ══════════════════════════════════════════════
+//  TODO CHECKLIST COMPONENT
+// ══════════════════════════════════════════════
+function TodoChecklist({ items, sectionId }) {
+  const [checked, setChecked] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(`md_todo_${sectionId}`) || '[]'); } catch { return []; }
+  });
+  const toggle = (idx) => {
+    const next = checked.includes(idx) ? checked.filter(i => i !== idx) : [...checked, idx];
+    setChecked(next);
+    localStorage.setItem(`md_todo_${sectionId}`, JSON.stringify(next));
+  };
+  return (
+    <div className="todo-list">
+      {items.map((item, idx) => (
+        <div key={idx} className="todo-item" onClick={() => toggle(idx)} style={{ cursor: 'pointer' }}>
+          <div className={`todo-checkbox${checked.includes(idx) ? ' checked' : ''}`}>
+            {checked.includes(idx) ? '✓' : ''}
+          </div>
+          <span className={`todo-text${checked.includes(idx) ? ' checked' : ''}`}>{item}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════
+//  NOTES PANEL COMPONENT
+// ══════════════════════════════════════════════
+function NotesPanel({ sectionId }) {
+  const [open, setOpen] = useState(false);
+  const [tab, setTab] = useState('private');
+  const [privateText, setPrivateText] = useState('');
+  const [publicNotes, setPublicNotes] = useState([]);
+  const [pubInput, setPubInput] = useState('');
+  const [authorName, setAuthorName] = useState(STORAGE.getUserName());
+  const hasPrivate = !!privateText.trim();
+  const hasPublic = publicNotes.length > 0;
+
+  useEffect(() => {
+    const saved = STORAGE.getPrivateNote(sectionId);
+    if (saved) setPrivateText(saved.text || '');
+    setPublicNotes(STORAGE.getPublicNotes(sectionId));
+  }, [sectionId]);
+
+  const savePrivate = () => {
+    STORAGE.setPrivateNote(sectionId, { text: privateText, updatedAt: Date.now() });
+    alert('備註已儲存！');
+  };
+
+  const addPublicNote = () => {
+    if (!pubInput.trim()) return;
+    const name = authorName.trim() || '匿名';
+    STORAGE.setUserName(name);
+    const updated = STORAGE.addPublicNote(sectionId, { author: name, text: pubInput, createdAt: Date.now() });
+    setPublicNotes(updated);
+    setPubInput('');
+    setAuthorName(name);
+  };
+
+  const deletePublicNote = (noteId) => {
+    const updated = STORAGE.deletePublicNote(sectionId, noteId);
+    setPublicNotes(updated);
+  };
+
+  const noteCount = (hasPrivate ? 1 : 0) + publicNotes.length;
+
+  return (
+    <div className="section-wrapper">
+      <button className={`note-toggle-btn${noteCount > 0 ? ' has-notes' : ''}`} onClick={() => setOpen(!open)}>
+        <span>✏️</span>
+        <span>{open ? '收起備註' : `備註 / 討論${noteCount > 0 ? ` (${noteCount})` : ''}`}</span>
+        <span style={{ marginLeft: 4 }}>{open ? '▲' : '▼'}</span>
+      </button>
+      {open && (
+        <div className="note-panel">
+          <div className="note-tabs">
+            <div className={`note-tab${tab === 'private' ? ' active' : ''}`} onClick={() => setTab('private')}>
+              🔒 我的備註{hasPrivate ? ' ●' : ''}
+            </div>
+            <div className={`note-tab${tab === 'public' ? ' active' : ''}`} onClick={() => setTab('public')}>
+              💬 團隊討論{hasPublic ? ` (${publicNotes.length})` : ''}
+            </div>
+          </div>
+          <div className="note-tab-content">
+            {tab === 'private' && (
+              <>
+                <p style={{ fontSize: 12, color: '#aaa', marginBottom: 8 }}>你的私人備註，只顯示在你的裝置上。</p>
+                <textarea
+                  className="note-textarea"
+                  placeholder="在這裡記下你的想法、個人反思或備忘..."
+                  value={privateText}
+                  onChange={e => setPrivateText(e.target.value)}
+                />
+                <button className="note-save-btn" onClick={savePrivate}>儲存備註</button>
+              </>
+            )}
+            {tab === 'public' && (
+              <>
+                <p style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>
+                  團隊討論區。所有在此裝置上開啟的人都能看見與新增。
+                </p>
+                <div className="public-input-row">
+                  <input className="name-input" placeholder="你的名字" value={authorName}
+                    onChange={e => setAuthorName(e.target.value)} style={{ maxWidth: 120 }} />
+                  <input className="name-input" placeholder="輸入留言或補充..." value={pubInput}
+                    onChange={e => setPubInput(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && addPublicNote()} style={{ flex: 1 }} />
+                  <button className="note-save-btn" onClick={addPublicNote}>送出</button>
+                </div>
+                {publicNotes.length === 0
+                  ? <div className="no-notes">目前還沒有討論，來開始第一則吧！</div>
+                  : publicNotes.map(note => (
+                      <div key={note.id} className="note-entry">
+                        <div className="note-entry-header">
+                          <span className="note-author">👤 {note.author}</span>
+                          <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                            <span className="note-time">{formatTime(note.createdAt)}</span>
+                            <button className="note-delete-btn" onClick={() => deletePublicNote(note.id)} title="刪除">✕</button>
+                          </span>
+                        </div>
+                        <div className="note-text">{note.text}</div>
+                      </div>
+                    ))
+                }
+              </>
+            )}
+          </div>
+          <div className="export-bar">
+            <span>📤 備份與分享：</span>
+            <button className="export-btn" onClick={() => {
+              const data = STORAGE.exportAll();
+              const blob = new Blob([data], { type: 'application/json' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a'); a.href = url;
+              a.download = 'MD手冊備註.json'; a.click(); URL.revokeObjectURL(url);
+            }}>匯出備註</button>
+            <button className="export-btn" onClick={() => {
+              const input = document.createElement('input');
+              input.type = 'file'; input.accept = '.json';
+              input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = evt => {
+                  try { STORAGE.importAll(evt.target.result); window.location.reload(); }
+                  catch { alert('匯入失敗，請確認檔案格式正確。'); }
+                };
+                reader.readAsText(file);
+              };
+              input.click();
+            }}>匯入備註</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════
+//  SECTION VIEW
+// ══════════════════════════════════════════════
+function SectionView({ section }) {
+  return (
+    <div id={section.id} style={{ scrollMarginTop: 20 }}>
+      <h3>{section.title}</h3>
+      {section.content.map((node, idx) => renderContent(node, idx))}
+      <NotesPanel sectionId={section.id} />
+      <hr className="divider" />
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════
+//  CHAPTER VIEW
+// ══════════════════════════════════════════════
+function ChapterView({ chapter }) {
+  return (
+    <>
+      <div className="chapter-banner">
+        <div className="chapter-label">
+          {chapter.englishTitle ? `${chapter.subtitle} · ${chapter.englishTitle}` : chapter.subtitle}
+        </div>
+        <h2>{chapter.emoji} {chapter.title}{chapter.subtitle !== chapter.title ? `：${chapter.subtitle}` : ''}</h2>
+        {chapter.englishTitle && <div className="chapter-sub">{chapter.englishTitle}</div>}
+        {chapter.desc && <div className="chapter-desc">{chapter.desc}</div>}
+      </div>
+      <div className="content-body">
+        {chapter.sections.map(sec => <SectionView key={sec.id} section={sec} />)}
+      </div>
+    </>
+  );
+}
+
+// ══════════════════════════════════════════════
+//  SIDEBAR
+// ══════════════════════════════════════════════
+function Sidebar({ current, onSelect, collapsed, setCollapsed }) {
+  const [openChapters, setOpenChapters] = useState({ [current]: true });
+  const toggleChapter = (id) => setOpenChapters(prev => ({ ...prev, [id]: !prev[id] }));
+
+  return (
+    <div className={`sidebar${collapsed ? ' collapsed' : ''}`}>
+      <div className="sidebar-header">
+        <div className="sidebar-logo">
+          <div className="sidebar-logo-icon">🎵</div>
+          {!collapsed && (
+            <div className="sidebar-title-text">
+              <h1>共鳴與捨己</h1>
+              <p>新生命敬拜團 MD 養成手冊</p>
+            </div>
+          )}
+        </div>
+      </div>
+      <nav className="sidebar-nav">
+        {HANDBOOK.map(ch => {
+          const isActive = current === ch.id;
+          const isOpen = openChapters[ch.id];
+          return (
+            <div key={ch.id} className="nav-chapter">
+              <button
+                className={`nav-chapter-btn${isActive ? ' active' : ''}${isOpen ? ' open' : ''}`}
+                onClick={() => {
+                  onSelect(ch.id, null);
+                  toggleChapter(ch.id);
+                  setOpenChapters(prev => ({ ...prev, [ch.id]: !prev[ch.id] }));
+                }}
+                title={collapsed ? ch.title + '：' + ch.subtitle : ''}
+              >
+                <span className="emoji">{ch.emoji}</span>
+                {!collapsed && (
+                  <>
+                    <span className="nav-label">
+                      <span className="nav-main">{ch.title}</span>
+                      <span className="nav-sub">{ch.subtitle}</span>
+                    </span>
+                    {ch.sections.length > 1 && <span className="arrow">▶</span>}
+                  </>
+                )}
+              </button>
+              {!collapsed && isOpen && ch.sections.length > 1 && (
+                <div className="nav-sections" style={{ maxHeight: isOpen ? 500 : 0 }}>
+                  {ch.sections.map(sec => (
+                    <div key={sec.id}
+                      className={`nav-section-item${current === ch.id ? '' : ''}`}
+                      onClick={() => { onSelect(ch.id, sec.id); }}
+                    >
+                      {sec.title}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </nav>
+      <div className="toggle-btn">
+        <button onClick={() => setCollapsed(!collapsed)} title={collapsed ? '展開側欄' : '收合側欄'}>
+          {collapsed ? '▶' : '◀'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════
+//  APP
+// ══════════════════════════════════════════════
+function App() {
+  const [currentChapterId, setCurrentChapterId] = useState('intro');
+  const [collapsed, setCollapsed] = useState(false);
+  const mainRef = useRef(null);
+
+  const currentChapter = HANDBOOK.find(c => c.id === currentChapterId) || HANDBOOK[0];
+  const chapterIdx = HANDBOOK.findIndex(c => c.id === currentChapterId);
+  const progress = Math.round(((chapterIdx + 1) / HANDBOOK.length) * 100);
+
+  const handleSelect = (chapterId, sectionId) => {
+    setCurrentChapterId(chapterId);
+    if (mainRef.current) mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    if (sectionId) {
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  };
+
+  const goNext = () => {
+    if (chapterIdx < HANDBOOK.length - 1) handleSelect(HANDBOOK[chapterIdx + 1].id, null);
+  };
+  const goPrev = () => {
+    if (chapterIdx > 0) handleSelect(HANDBOOK[chapterIdx - 1].id, null);
+  };
+
+  return (
+    <div id="root">
+      <Sidebar current={currentChapterId} onSelect={handleSelect} collapsed={collapsed} setCollapsed={setCollapsed} />
+      <div className="main-area" ref={mainRef}>
+        <div className="progress-bar-wrap">
+          <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
+        </div>
+        <ChapterView chapter={currentChapter} />
+        {/* Chapter Navigation */}
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '24px 48px 48px', borderTop: '1px solid #e5e0d8', marginTop: 16
+        }}>
+          <button onClick={goPrev} disabled={chapterIdx === 0}
+            style={{ background: chapterIdx === 0 ? '#f0ebe3' : '#1a1a35', color: chapterIdx === 0 ? '#bbb' : '#c9a84c',
+              border: 'none', padding: '10px 20px', borderRadius: 8, cursor: chapterIdx === 0 ? 'default' : 'pointer',
+              fontFamily: 'inherit', fontSize: 13, fontWeight: 600, transition: 'all .2s' }}>
+            ← 上一章
+          </button>
+          <span style={{ fontSize: 12, color: '#aaa' }}>
+            {chapterIdx + 1} / {HANDBOOK.length}
+          </span>
+          <button onClick={goNext} disabled={chapterIdx === HANDBOOK.length - 1}
+            style={{ background: chapterIdx === HANDBOOK.length - 1 ? '#f0ebe3' : '#1a1a35',
+              color: chapterIdx === HANDBOOK.length - 1 ? '#bbb' : '#c9a84c',
+              border: 'none', padding: '10px 20px', borderRadius: 8,
+              cursor: chapterIdx === HANDBOOK.length - 1 ? 'default' : 'pointer',
+              fontFamily: 'inherit', fontSize: 13, fontWeight: 600, transition: 'all .2s' }}>
+            下一章 →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
