@@ -14,40 +14,60 @@ body{font-family:-apple-system,'PingFang TC','Noto Sans TC','Microsoft JhengHei'
 
 /* ── Layout ── */
 #root{display:flex;height:100vh}
-.sidebar{width:210px;min-width:210px;background:#1a1a35;color:#e0dbd0;display:flex;flex-direction:column;overflow:hidden;transition:width .3s;z-index:10}
-.sidebar.collapsed{width:48px;min-width:48px}
-.main-area{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.sidebar-wrap{background:#1a1a35;color:#e0dbd0;display:flex;flex-direction:column;overflow:visible;position:relative;flex-shrink:0;z-index:10}
+.main-area{flex:1;overflow-y:auto;display:flex;flex-direction:column;min-width:0}
+
+/* ── Drag Handle ── */
+.drag-handle{position:absolute;right:-4px;top:0;bottom:0;width:8px;cursor:col-resize;z-index:20;background:transparent;transition:background .15s}
+.drag-handle:hover,.drag-handle.dragging{background:rgba(201,168,76,.45)}
+
+/* ── Mode Toggle Buttons ── */
+.mode-btns{display:flex;gap:3px;margin-left:auto;flex-shrink:0}
+.mode-btn{background:rgba(255,255,255,.07);border:none;border-radius:5px;color:rgba(255,255,255,.45);padding:4px 6px;cursor:pointer;font-size:13px;transition:all .2s;line-height:1}
+.mode-btn.active{background:rgba(201,168,76,.22);color:#c9a84c}
+.mode-btn:hover{background:rgba(255,255,255,.12);color:#fff}
 
 /* ── Sidebar ── */
-.sidebar-header{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
-.sidebar-logo{display:flex;align-items:center;gap:10px}
-.sidebar-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#c9a84c,#e8c97a);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.sidebar-title-text{overflow:hidden}
-.sidebar-title-text h1{font-size:13px;font-weight:700;color:#c9a84c;white-space:nowrap}
-.sidebar-title-text p{font-size:10px;color:rgba(255,255,255,.4);margin-top:2px;white-space:nowrap}
-.sidebar-nav{flex:1;overflow-y:auto;padding:12px 0}
-.sidebar-nav::-webkit-scrollbar{width:4px}
+.sidebar-header{padding:16px 12px 14px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.sidebar-logo{display:flex;align-items:center;gap:8px}
+.sidebar-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#c9a84c,#e8c97a);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sidebar-title-text{overflow:hidden;flex:1;min-width:0}
+.sidebar-title-text h1{font-size:12px;font-weight:700;color:#c9a84c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-title-text p{font-size:9.5px;color:rgba(255,255,255,.4);margin-top:1px;white-space:nowrap}
+.sidebar-nav{flex:1;overflow-y:auto;overflow-x:visible;padding:10px 0}
+.sidebar-nav::-webkit-scrollbar{width:3px}
 .sidebar-nav::-webkit-scrollbar-track{background:transparent}
 .sidebar-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
-.nav-chapter{margin-bottom:2px}
-.nav-chapter-btn{width:100%;padding:10px 16px;display:flex;align-items:center;gap:10px;background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;font-size:13px;font-family:inherit;transition:all .2s;border-radius:6px;margin:0 6px;width:calc(100% - 12px)}
+
+/* ── Full Nav (desktop) ── */
+.nav-chapter{margin-bottom:1px}
+.nav-chapter-btn{display:flex;align-items:center;gap:8px;background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;font-family:inherit;transition:all .2s;border-radius:6px;margin:0 6px;width:calc(100% - 12px);padding:9px 10px}
 .nav-chapter-btn:hover{background:rgba(255,255,255,.07);color:#fff}
 .nav-chapter-btn.active{background:rgba(201,168,76,.15);color:#c9a84c}
-.nav-chapter-btn .emoji{font-size:16px;flex-shrink:0;width:22px;text-align:center}
-.nav-chapter-btn .nav-label{overflow:hidden;white-space:nowrap}
+.nav-chapter-btn .emoji{font-size:15px;flex-shrink:0;width:20px;text-align:center}
+.nav-chapter-btn .nav-label{overflow:hidden;white-space:nowrap;flex:1;min-width:0}
 .nav-chapter-btn .nav-label .nav-main{font-size:11.5px;font-weight:600;display:block;overflow:hidden;text-overflow:ellipsis}
-.nav-chapter-btn .nav-label .nav-sub{font-size:10px;opacity:.6;display:block}
-.nav-chapter-btn .arrow{margin-left:auto;font-size:10px;transition:transform .2s;flex-shrink:0}
+.nav-chapter-btn .nav-label .nav-sub{font-size:9.5px;opacity:.55;display:block;overflow:hidden;text-overflow:ellipsis}
+.nav-chapter-btn .arrow{margin-left:auto;font-size:9px;transition:transform .2s;flex-shrink:0;opacity:.5}
 .nav-chapter-btn.open .arrow{transform:rotate(90deg)}
 .nav-sections{overflow:hidden;transition:max-height .3s ease}
-.nav-section-item{padding:7px 16px 7px 48px;font-size:12px;color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-section-item{padding:6px 10px 6px 38px;font-size:11px;color:rgba(255,255,255,.45);cursor:pointer;transition:all .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nav-section-item:hover{color:rgba(255,255,255,.85)}
-.nav-section-item.active{color:#c9a84c;font-weight:600}
 
-/* collapse toggle */
-.toggle-btn{padding:12px 16px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:flex-end;flex-shrink:0}
-.toggle-btn button{background:rgba(255,255,255,.07);border:none;color:rgba(255,255,255,.5);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .2s}
-.toggle-btn button:hover{background:rgba(255,255,255,.12);color:#fff}
+/* ── Compact Nav (phone) ── */
+.nav-compact-btn{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:rgba(255,255,255,.65);cursor:pointer;font-family:inherit;transition:all .2s;border-radius:6px;margin:2px auto;padding:7px 0;width:calc(100% - 8px)}
+.nav-compact-btn:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-compact-btn.active{background:rgba(201,168,76,.15);color:#c9a84c}
+.nav-compact-btn .c-emoji{font-size:18px;line-height:1}
+.nav-compact-btn .c-label{font-size:9px;font-weight:600;text-align:center;line-height:1.2;padding:0 2px;overflow:hidden;width:100%}
+
+/* ── Tooltip Popup ── */
+.nav-tooltip{position:fixed;background:#1c1c3a;border:1px solid rgba(201,168,76,.35);border-radius:10px;padding:12px 15px;box-shadow:4px 8px 24px rgba(0,0,0,.5);z-index:9999;min-width:190px;max-width:250px}
+.nav-tooltip h4{font-size:13px;font-weight:700;color:#c9a84c;margin-bottom:4px;line-height:1.4}
+.nav-tooltip .tt-sub{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:0}
+.nav-tooltip .tt-sections{margin-top:10px;border-top:1px solid rgba(255,255,255,.08);padding-top:8px;display:flex;flex-direction:column;gap:2px}
+.nav-tooltip .tt-section-item{font-size:11px;color:rgba(255,255,255,.5);padding:4px 6px;cursor:pointer;transition:all .15s;border-radius:4px}
+.nav-tooltip .tt-section-item:hover{background:rgba(201,168,76,.12);color:#c9a84c}
 
 /* ── Chapter Header ── */
 .chapter-banner{background:linear-gradient(135deg,#1a1a35,#2a2a50);color:#fff;padding:40px 52px 32px;flex-shrink:0}
@@ -1145,56 +1165,104 @@ function ChapterView({ chapter }) {
 // ══════════════════════════════════════════════
 //  SIDEBAR
 // ══════════════════════════════════════════════
-function Sidebar({ current, onSelect, collapsed, setCollapsed }) {
+function Sidebar({ current, onSelect, sidebarWidth, setSidebarWidth }) {
   const [openChapters, setOpenChapters] = useState({ [current]: true });
-  const toggleChapter = (id) => setOpenChapters(prev => ({ ...prev, [id]: !prev[id] }));
+  const [isDragging, setIsDragging] = useState(false);
+  const [tooltip, setTooltip] = useState(null); // { ch, top, left }
+
+  const isCompact = sidebarWidth < 130;
+
+  // ── Drag-to-resize ──
+  const startDrag = useCallback((e) => {
+    e.preventDefault();
+    const startX = e.clientX;
+    const startW = sidebarWidth;
+    setIsDragging(true);
+    const onMove = (ev) => {
+      const newW = Math.max(68, Math.min(320, startW + ev.clientX - startX));
+      setSidebarWidth(newW);
+    };
+    const onUp = () => {
+      setIsDragging(false);
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  }, [sidebarWidth, setSidebarWidth]);
+
+  // ── Tooltip (compact mode) ──
+  const showTip = (e, ch) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setTooltip({ ch, top: Math.min(rect.top, window.innerHeight - 220), left: sidebarWidth + 6 });
+  };
+  const hideTip = () => setTooltip(null);
 
   return (
-    <div className={`sidebar${collapsed ? ' collapsed' : ''}`}>
+    <div className="sidebar-wrap" style={{ width: sidebarWidth, transition: isDragging ? 'none' : 'width .2s' }}>
+      {/* Header */}
       <div className="sidebar-header">
         <div className="sidebar-logo">
           <div className="sidebar-logo-icon">🎵</div>
-          {!collapsed && (
+          {!isCompact && (
             <div className="sidebar-title-text">
               <h1>共鳴與捨己</h1>
               <p>新生命敬拜團 MD 養成手冊</p>
             </div>
           )}
+          <div className="mode-btns">
+            <button className={`mode-btn${!isCompact ? ' active' : ''}`} title="桌機模式（寬）"
+              onClick={() => setSidebarWidth(210)}>💻</button>
+            <button className={`mode-btn${isCompact ? ' active' : ''}`} title="手機模式（窄）"
+              onClick={() => setSidebarWidth(82)}>📱</button>
+          </div>
         </div>
       </div>
+
+      {/* Nav */}
       <nav className="sidebar-nav">
         {HANDBOOK.map(ch => {
           const isActive = current === ch.id;
           const isOpen = openChapters[ch.id];
+
+          if (isCompact) {
+            return (
+              <div key={ch.id} style={{ position: 'relative' }}
+                onMouseEnter={(e) => showTip(e, ch)}
+                onMouseLeave={hideTip}
+              >
+                <button
+                  className={`nav-compact-btn${isActive ? ' active' : ''}`}
+                  onClick={(e) => { onSelect(ch.id, null); showTip(e, ch); }}
+                >
+                  <span className="c-emoji">{ch.emoji}</span>
+                  <span className="c-label">{ch.title}</span>
+                </button>
+              </div>
+            );
+          }
+
           return (
             <div key={ch.id} className="nav-chapter">
               <button
                 className={`nav-chapter-btn${isActive ? ' active' : ''}${isOpen ? ' open' : ''}`}
                 onClick={() => {
                   onSelect(ch.id, null);
-                  toggleChapter(ch.id);
                   setOpenChapters(prev => ({ ...prev, [ch.id]: !prev[ch.id] }));
                 }}
-                title={collapsed ? ch.title + '：' + ch.subtitle : ''}
               >
                 <span className="emoji">{ch.emoji}</span>
-                {!collapsed && (
-                  <>
-                    <span className="nav-label">
-                      <span className="nav-main">{ch.title}</span>
-                      <span className="nav-sub">{ch.subtitle}</span>
-                    </span>
-                    {ch.sections.length > 1 && <span className="arrow">▶</span>}
-                  </>
-                )}
+                <span className="nav-label">
+                  <span className="nav-main">{ch.title}</span>
+                  <span className="nav-sub">{ch.subtitle}</span>
+                </span>
+                {ch.sections.length > 1 && <span className="arrow">▶</span>}
               </button>
-              {!collapsed && isOpen && ch.sections.length > 1 && (
-                <div className="nav-sections" style={{ maxHeight: isOpen ? 500 : 0 }}>
+              {isOpen && ch.sections.length > 1 && (
+                <div className="nav-sections" style={{ maxHeight: 500 }}>
                   {ch.sections.map(sec => (
-                    <div key={sec.id}
-                      className={`nav-section-item${current === ch.id ? '' : ''}`}
-                      onClick={() => { onSelect(ch.id, sec.id); }}
-                    >
+                    <div key={sec.id} className="nav-section-item"
+                      onClick={() => onSelect(ch.id, sec.id)}>
                       {sec.title}
                     </div>
                   ))}
@@ -1204,11 +1272,31 @@ function Sidebar({ current, onSelect, collapsed, setCollapsed }) {
           );
         })}
       </nav>
-      <div className="toggle-btn">
-        <button onClick={() => setCollapsed(!collapsed)} title={collapsed ? '展開側欄' : '收合側欄'}>
-          {collapsed ? '▶' : '◀'}
-        </button>
-      </div>
+
+      {/* Drag Handle */}
+      <div className={`drag-handle${isDragging ? ' dragging' : ''}`} onMouseDown={startDrag} />
+
+      {/* Floating Tooltip */}
+      {tooltip && isCompact && (
+        <div className="nav-tooltip" style={{ top: tooltip.top, left: tooltip.left }}
+          onMouseEnter={() => {}} onMouseLeave={hideTip}>
+          <h4>{tooltip.ch.emoji} {tooltip.ch.title}
+            {tooltip.ch.subtitle && tooltip.ch.subtitle !== tooltip.ch.title
+              ? `：${tooltip.ch.subtitle}` : ''}
+          </h4>
+          {tooltip.ch.englishTitle && <p className="tt-sub">{tooltip.ch.englishTitle}</p>}
+          {tooltip.ch.sections.length > 1 && (
+            <div className="tt-sections">
+              {tooltip.ch.sections.map(sec => (
+                <div key={sec.id} className="tt-section-item"
+                  onClick={() => { onSelect(tooltip.ch.id, sec.id); hideTip(); }}>
+                  → {sec.title}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -1218,7 +1306,7 @@ function Sidebar({ current, onSelect, collapsed, setCollapsed }) {
 // ══════════════════════════════════════════════
 function App() {
   const [currentChapterId, setCurrentChapterId] = useState('intro');
-  const [collapsed, setCollapsed] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(210);
   const mainRef = useRef(null);
 
   const currentChapter = HANDBOOK.find(c => c.id === currentChapterId) || HANDBOOK[0];
@@ -1245,7 +1333,7 @@ function App() {
 
   return (
     <div id="root">
-      <Sidebar current={currentChapterId} onSelect={handleSelect} collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Sidebar current={currentChapterId} onSelect={handleSelect} sidebarWidth={sidebarWidth} setSidebarWidth={setSidebarWidth} />
       <div className="main-area" ref={mainRef}>
         <div className="progress-bar-wrap">
           <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
